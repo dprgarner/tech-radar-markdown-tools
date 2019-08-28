@@ -1,4 +1,5 @@
 const marked = require('marked');
+const moment = require('moment')
 
 function getHeadings(mdString) {
   const lexerData = marked.lexer(mdString);
@@ -53,14 +54,10 @@ function parseMarkdown(mdString) {
   });
 }
 
-function getIsNew(dateStr, months) {
-  const date = new Date(dateStr);
-  const cutoff = new Date(
-    Date.UTC(Date.now().getFullYear(), Date.now().getMonth(), 0, -1, 0, 0)
-  );
-  cutoff.setMonth((12 + cutoff.getMonth() - months) % 12);
-  console.log(date, cutoff);
-  return date > cutoff;
+function getIsNew(dateStr, months, { format='MMMM YYYY', locale='en'} = {}) {
+  const date = moment(dateStr, format, locale).startOf('month');
+  const cutoff = moment().startOf('month').subtract(months, 'months');
+  return date >= cutoff;
 }
 
 function mapModifiedToIsNew(blips, threshold) {
