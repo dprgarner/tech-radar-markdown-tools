@@ -28,7 +28,12 @@ Stuff
       {
         name: 'Another h2',
         values: [
-          { type: 'list_start', ordered: false, start: '', loose: false },
+          {
+            type: 'list_start',
+            ordered: false,
+            start: '',
+            loose: false,
+          },
           {
             type: 'list_item_start',
             task: false,
@@ -173,13 +178,13 @@ describe('getIsNew', () => {
   });
 
   it('allows custom date formats', () => {
-    const opts = { format: 'YYYY-MM-DD' } 
+    const opts = { format: 'YYYY-MM-DD' };
     expect(getIsNew('2019-04-01', 3, opts)).toBe(false);
     expect(getIsNew('2019-04-01', 4, opts)).toBe(true);
   });
 
   it('allows locale-specific formats', () => {
-    const opts = { locale: 'fr' } 
+    const opts = { locale: 'fr' };
     expect(getIsNew('avril 2019', 3, opts)).toBe(false);
     expect(getIsNew('avril 2019', 4, opts)).toBe(true);
   });

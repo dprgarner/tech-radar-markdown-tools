@@ -1,5 +1,5 @@
 const marked = require('marked');
-const moment = require('moment')
+const moment = require('moment');
 
 function getHeadings(mdString) {
   const lexerData = marked.lexer(mdString);
@@ -42,7 +42,10 @@ function parseMarkdown(mdString) {
     const { frontMatter, description } = partitionSection(values);
     const markedDescription = [...description];
     markedDescription.links = links;
-    const blip = { name, description: marked.parser(markedDescription).trim() };
+    const blip = {
+      name,
+      description: marked.parser(markedDescription).trim(),
+    };
     for (let token of frontMatter) {
       let [key, value] = token.split(':').map(t => t.trim());
       if (value) {
@@ -54,9 +57,15 @@ function parseMarkdown(mdString) {
   });
 }
 
-function getIsNew(dateStr, months, { format='MMMM YYYY', locale='en'} = {}) {
+function getIsNew(
+  dateStr,
+  months,
+  { format = 'MMMM YYYY', locale = 'en' } = {}
+) {
   const date = moment(dateStr, format, locale).startOf('month');
-  const cutoff = moment().startOf('month').subtract(months, 'months');
+  const cutoff = moment()
+    .startOf('month')
+    .subtract(months, 'months');
   return date >= cutoff;
 }
 

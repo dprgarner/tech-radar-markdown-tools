@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+- 8
+jobs:
+  include:
+  - stage: test
+    name: Unit Tests
+    script: yarn test
+  - stage: test
+    name: Linting
+    script: yarn lint
+
+  - stage: deploy
+    script: skip
+    deploy:
+      provider: npm
+      email: dprgarner@gmail.com
+      skip_cleanup: true
+      on:
+        tags: true
+        repo: dprgarner/tech-radar-markdown-tools
+      api_key:
+        secure: "B1AUsNnXGVjn8ag4UF3t3HvJWLC1TwY/g/FDPunHWSQEmIwanvQeHBqPRZ/nkgwcKjsK3W1qD5FAVCOJOVY6vhV6zWyZd3MwrcG4nM1HM4TiTgTx35Lx2WZ+R9ZNE2pfBuLblj4lnjwrGn98y5IThLCd2iZfYnSw6Zaml5nnqgaoH/2/1EM0hsF0Mpbeo/HVphsSUvU+w5mValLDbq4/yYjiED7TgxW7i3nbDPN3VUdwF7mHAA2H/WPdmFqczMeeaLLaHTl7ZAzbmWLzfTHhB6kzhpu8cpd7UXzWgyp/WqWQhC/IyKjcFPqVzN8xkFGNbeAyqaeyHP3TUGV0LSGfcqA9rqpLassiXaHI8H4zyfDg/1zsiZugf1OUpyNWTA6vHOf1gWZFxp6uxZuC4NG8166JDtceBujcHJgtUYv/1H3F/P4GwvV56LTeItbrG3n2eyd/WHtbwc8RHAnGqqDuT8v5SGwJNmVr4RDpswHScw0wqANGwahq7gQUv3UsNOMNu5jp8o/SOT/VqUqU3rVcGVeXnGvlbSZFDOaHeY8Niwz/w3mfnbsurMqS6OK7mlM/GVbx/udOJzl80d0u4pnU8m3L/zKpWHjQQJBcCMXWnMLCTL9mnrKwTwIqI7da6eyO/txnxe+1acFl3bh3baRCAi1yGx3o3agKFr4lmINGIBU="
+
