@@ -57,24 +57,6 @@ function parseMarkdown(mdString) {
   });
 }
 
-function getIsNew(
-  dateStr,
-  months,
-  { format = 'MMMM YYYY', locale = 'en' } = {}
-) {
-  const date = moment(dateStr, format, locale).startOf('month');
-  const cutoff = moment()
-    .startOf('month')
-    .subtract(months, 'months');
-  return date >= cutoff;
-}
-
-function mapModifiedToIsNew(blips, threshold) {
-  return blips;
-}
-
 exports.getHeadings = getHeadings;
-exports.getIsNew = getIsNew;
-exports.mapModifiedToIsNew = mapModifiedToIsNew;
 exports.partitionSection = partitionSection;
 exports.parseMarkdown = parseMarkdown;
