@@ -1,5 +1,10 @@
 const marked = require('marked');
 
+/**
+ * A markdown token object returned by marked lexer parse
+ * @typedef {Object} Token
+ */
+
 function splitByHeadings(tokens, depth) {
   const sections = [];
   let preamble = [];
@@ -48,7 +53,7 @@ function toTree(tokens) {
     };
   }
 
-  const depth = tokens[firstSubheading].depth;
+  const { depth } = tokens[firstSubheading];
   let end = tokens
     .slice(firstSubheading)
     .findIndex(token => token.type === 'heading' && token.depth < depth);
@@ -100,12 +105,40 @@ function mapNode({ name, tokens, sections }, links) {
   return { name, metadata, content };
 }
 
+/**
+ * Validate that the headings hierarchy is well-formed
+ * @param {Token[]} tokens The array of markdown tokens
+ */
+function validateHeadings(tokens) {
+  if (tokens[0].type !== 'heading' || tokens[0].depth !== 1) {
+    throw new Error('The first token must be a h1 heading');
+  }
+  let currentDepth = 1;
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    if (token.type === 'heading') {
+      if (token.depth === 1 && i !== 0) {
+        throw new Error('There should only be a single h1');
+      }
+      if (token.depth - 1 > currentDepth) {
+        throw new Error(
+          `h${token.depth} should not appear in a h${currentDepth} section`
+        );
+      }
+      currentDepth = token.depth;
+    }
+  }
+  return tokens;
+}
+
 function parseMarkdown(mdString) {
   const tokens = marked.lexer(mdString);
+  validateHeadings(tokens);
   const tree = toTree(tokens);
   return mapNode(tree, tokens.links);
 }
 
-exports.getHeadings = getHeadings;
-exports.partitionSection = partitionSection;
+exports.splitByHeadings = splitByHeadings;
+exports.toTree = toTree;
+exports.validateHeadings = validateHeadings;
 exports.parseMarkdown = parseMarkdown;
