@@ -1,5 +1,4 @@
 const marked = require('marked');
-const validateHeadings = require('./validateHeadings');
 const mapToSectionsTree = require('./mapToSectionsTree');
 
 /**
@@ -52,7 +51,9 @@ function mapNode(links, { name, tokens, sections }) {
 
 function parseMarkdown(mdString) {
   const tokens = marked.lexer(mdString);
-  validateHeadings(tokens);
+  if (tokens[0].type !== 'heading' || tokens[0].depth !== 1) {
+    throw new Error('The first token must be a h1 heading');
+  }
   const tree = mapToSectionsTree(tokens);
   return mapNode(tokens.links, tree);
 }
