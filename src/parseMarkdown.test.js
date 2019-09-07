@@ -24,7 +24,8 @@ Eh
     expect(parseMarkdown(md)).toEqual({
       name: 'H1',
       metadata: {},
-      content: [
+      content: '',
+      sections: [
         {
           name: 'H2',
           metadata: { item: 'One' },
@@ -89,11 +90,13 @@ Eh
     expect(parseMarkdown(md)).toEqual({
       name: 'H1',
       metadata: {},
-      content: [
+      content: '',
+      sections: [
         {
           name: 'H2',
           metadata: { item: 'in h2' },
-          content: [
+          content: '',
+          sections: [
             {
               name: 'H3',
               metadata: {

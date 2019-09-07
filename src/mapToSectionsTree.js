@@ -1,7 +1,15 @@
 /**
+ * @file Utility functions for converting markdown to a structured tree of
+ * sections
+ * @author David Garner
+ */
+
+/**
  * A markdown token object returned by marked lexer parse
  * @typedef {Object} Token
- * @property {type} string - The type of the token.
+ * @property {string} type - The type of the token
+ * @property {Number=} depth - The depth of a heading token
+ * @property {text=} text - The text of the token
  */
 
 /**
