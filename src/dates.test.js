@@ -1,17 +1,6 @@
 const { getIsNew, mapModifiedToIsNew } = require('./dates');
 
 describe('getIsNew', () => {
-  let dateNow;
-
-  beforeEach(() => {
-    dateNow = Date.now;
-    Date.now = jest.fn(() => new Date('2019-08-05T01:00:00+01:00'));
-  });
-
-  beforeEach(() => {
-    Date.now = dateNow;
-  });
-
   it('calculates if a date is new', () => {
     expect(getIsNew('August 2019', 3)).toBe(true);
     expect(getIsNew('July 2019', 3)).toBe(true);
