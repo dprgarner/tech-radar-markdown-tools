@@ -9,8 +9,9 @@ function parseMarkdown(mdString) {
   if (tokens[0].type !== 'heading' || tokens[0].depth !== 1) {
     throw new Error('The first token must be a h1 heading');
   }
-  const tree = createTokensTree(tokens);
-  return mapToMetadataTree(tokens.links, tree);
+  const tokensTree = createTokensTree(tokens);
+  const metadataTree = mapToMetadataTree(tokens.links, tokensTree);
+  return metadataTree;
 }
 
 module.exports = parseMarkdown;

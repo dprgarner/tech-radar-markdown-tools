@@ -40,3 +40,14 @@
  * @property {string} content - The rendered HTML content of this node
  * @property {MetadataNode[]=} sections - The subsections of this section
  */
+
+/**
+ * A Thoughtworks radar "blip".
+ * @typedef {Object} Blip
+ * @property {string} name - The name of the blip
+ * @property {string} quadrant - The quadrant that the blip sits in
+ * @property {string} ring - The ring that the blip sits in, reflecting the
+ * status of the blip. This should take one of up to four pre-set values.
+ * @property {boolean} isNew - If the blip is new
+ * @property {string} description - The description of the blip in rendered HTML
+ */
