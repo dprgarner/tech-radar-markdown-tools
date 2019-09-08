@@ -4,23 +4,7 @@
  * @author David Garner
  */
 
-/**
- * A markdown token object returned by marked lexer parse
- * @typedef {Object} Token
- * @property {string} type - The type of the token
- * @property {Number=} depth - The depth of a heading token
- * @property {text=} text - The text of the token
- */
-
-/**
- * A tree node representing a section with nested subsections.
- * @typedef {Object} SectionNode
- * @property {string} name - The name of the section
- * @property {Token[]} tokens - An array of marked lexer tokens. This represents
- * the markdown appearing after the section heading but before any subsection
- * headings.
- * @property {SectionNode[]=} sections - The subsections of this section.
- */
+require('./typedef');
 
 /**
  * Validate that the headings hierarchy is well-formed,i.e the first element in
@@ -95,9 +79,9 @@ function collateByHeadingDepth(depth, tokens) {
  * tree must be lower than this heading level, and no heading levels should be
  * skipped (e.g. h4s should not appear directly below h2s).
  * @param {Token[]} tokens An array of markdown tokens
- * @returns {SectionNode} The top-level section node
+ * @returns {TokensNode} The top-level node
  */
-function mapToSectionsTree(tokens) {
+function createTokensTree(tokens) {
   validateHeadingStructure(tokens);
   const firstSubheading =
     tokens
@@ -135,10 +119,10 @@ function mapToSectionsTree(tokens) {
     sections: collateByHeadingDepth(
       depth,
       tokens.slice(firstSubheading, end)
-    ).map(mapToSectionsTree),
+    ).map(createTokensTree),
   };
 
   return acc;
 }
 
-module.exports = mapToSectionsTree;
+module.exports = createTokensTree;

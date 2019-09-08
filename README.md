@@ -2,6 +2,8 @@
 
 Tools for creating a Tech Radar in Markdown and converting it to JSON.
 
-## Links
+## Overview
 
-- https://medium.com/ingeniouslysimple/building-our-own-tech-radar-1e577e48659c
+This repo contains a set of helper functions for parsing Markdown documents into JSON for use with the [Tech Radar generator](https://github.com/dprgarner/tech-radar-generator).
+
+These tools are likely to be superceded by another static site building tool such as Gatsby with MDX.

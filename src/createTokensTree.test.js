@@ -1,10 +1,10 @@
 const marked = require('marked');
 
-const mapToSectionsTree = require('./mapToSectionsTree');
+const createTokensTree = require('./createTokensTree');
 
-const testMd = md => mapToSectionsTree(marked.lexer(md.trim()));
+const testMd = md => createTokensTree(marked.lexer(md.trim()));
 
-describe('mapToSectionsTree', () => {
+describe('createTokensTree', () => {
   it('creates a leaf node', () => {
     const md = `
 # H1
@@ -109,7 +109,7 @@ Eh
   });
 });
 
-describe('mapToSectionsTree validating', () => {
+describe('createTokensTree validating', () => {
   it('does not throw if the headings are well-formed', () => {
     const md = `
 # H1
