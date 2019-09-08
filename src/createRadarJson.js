@@ -10,6 +10,8 @@ const readFile = util.promisify(fs.readFile);
 
 const parseMarkdownToBlips = require('./parseMarkdownToBlips');
 
+const flatten = xs => xs.reduce((acc, x) => acc.concat(x), []);
+
 /**
  * Creates a JSON object representation a tech radar for use with the
  * tech-radar-generator app.
@@ -21,7 +23,7 @@ async function createRadarJson({ title, quadrants, rings, isNewOptions }) {
   const mdArray = await Promise.all(quadrants.map(fp => readFile(fp, 'utf8')));
   const blipsArray = mdArray.map(md => parseMarkdownToBlips(md, isNewOptions));
   const quadrantNames = blipsArray.map(blips => blips[0].quadrant);
-  const blips = blipsArray.flat();
+  const blips = flatten(blipsArray);
   return {
     title,
     quadrants: quadrantNames,
