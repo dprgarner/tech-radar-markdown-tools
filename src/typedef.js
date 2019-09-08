@@ -50,7 +50,7 @@
  * @property {string=} locale The Moment locale in which to parse the dates.
  * Defaults to `"en"`.
  * @property {Number=} thresholdInMonths After this time in months, the blip is no
- * longer considered new
+ * longer considered new. Defaults to `3`.
  */
 
 /**

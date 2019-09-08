@@ -1,3 +1,7 @@
+/**
+ * @fileoverview A function for generating a tech radar from markdown files
+ * @author David Garner
+ */
 const fs = require('fs');
 const util = require('util');
 require('./typedef');
@@ -11,7 +15,7 @@ const parseMarkdownToBlips = require('./parseMarkdownToBlips');
  * tech-radar-generator app.
  *
  * @param {RadarOpts} opts The options for configuring a radar
- * @returns {TechRadar} The generated tech radar
+ * @returns {Promise<TechRadar>} The generated tech radar
  */
 async function createRadarJson({ title, quadrants, rings, isNewOptions }) {
   const mdArray = await Promise.all(quadrants.map(fp => readFile(fp, 'utf8')));
