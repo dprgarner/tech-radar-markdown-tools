@@ -108,3 +108,27 @@ La lune la fromage
 // Returns an array with one "blip" object
 parseMarkdownToBlips(md, { locale: 'fr' });
 ```
+
+## Developing
+
+To run the tests:
+
+    yarn test
+
+To run the linter:
+
+    yarn lint
+
+## Releasing
+
+Releases to NPM are performed via Travis when tagged commits are pushed to the repo. Create a new tagged commit and bump the version in package.json with the npm version script:
+
+```bash
+npm version patch
+```
+
+and push the new commits and tags with:
+
+```bash
+git push && git push --tags
+```
