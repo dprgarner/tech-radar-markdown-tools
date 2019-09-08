@@ -1,6 +1,6 @@
 {
   "name": "tech-radar-markdown-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tools for creating a Tech Radar in Markdown and converting it to JSON",
   "main": "index.js",
   "scripts": {
