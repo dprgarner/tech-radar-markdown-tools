@@ -7,57 +7,56 @@ describe('mapToMetadataTree', () => {
   it('maps a sections tree to a metadata tree', () => {
     const sectionsTree = {
       name: 'H1',
-      tokens: [],
       sections: [
         {
           name: 'H2',
           tokens: [
-            { type: 'list_start', ordered: false, start: '', loose: false },
             {
-              type: 'list_item_start',
-              task: false,
-              checked: undefined,
-              loose: false,
+              type: 'list',
+              items: [
+                {
+                  type: 'list_item',
+                  text: 'Item: One',
+                  tokens: [{ type: 'text', text: 'Item: One' }],
+                },
+                {
+                  type: 'list_item',
+                  text: 'Item Two without a colon',
+                  tokens: [{ type: 'text', text: 'Item: One' }],
+                },
+              ],
             },
-            { type: 'text', text: 'Item: One' },
-            { type: 'list_item_end' },
             {
-              type: 'list_item_start',
-              task: false,
-              checked: undefined,
-              loose: false,
+              type: 'paragraph',
+              text: 'Stuff with a [link][link]',
+              tokens: [
+                { type: 'text', text: 'Stuff with a ' },
+                {
+                  type: 'link',
+                  text: 'link',
+                  href: 'http://link',
+                  tokens: [{ type: 'text', text: 'link' }],
+                },
+              ],
             },
-            { type: 'text', text: 'Item Two without a colon' },
-            { type: 'space' },
-            { type: 'list_item_end' },
-            { type: 'list_end' },
-            { type: 'paragraph', text: 'Stuff with a [link][link]' },
             { type: 'space' },
           ],
         },
         {
           name: 'Another h2',
           tokens: [
-            { type: 'list_start', ordered: false, start: '', loose: false },
             {
-              type: 'list_item_start',
-              task: false,
-              checked: undefined,
-              loose: false,
+              type: 'list',
+              items: [
+                { type: 'list_item', text: 'Status: Cool' },
+                { type: 'list_item', text: 'Really: Yep' },
+              ],
             },
-            { type: 'text', text: 'Status: Cool' },
-            { type: 'list_item_end' },
             {
-              type: 'list_item_start',
-              task: false,
-              checked: undefined,
-              loose: false,
+              type: 'paragraph',
+              text: 'Eh',
+              tokens: [{ type: 'text', text: 'Eh' }],
             },
-            { type: 'text', text: 'Really: Yep' },
-            { type: 'space' },
-            { type: 'list_item_end' },
-            { type: 'list_end' },
-            { type: 'paragraph', text: 'Eh' },
           ],
         },
       ],

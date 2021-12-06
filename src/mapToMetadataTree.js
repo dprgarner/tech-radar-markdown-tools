@@ -18,20 +18,25 @@ require('./typedef');
  * HTML of the section
  */
 function parseSectionTokens(links, tokens) {
+  if (!tokens || tokens.length == 0) return [{}, ''];
+
+  const listIdx = tokens.findIndex(token => token.type == 'list');
+  if (listIdx < 0) return [{}, ''];
+
+  const list = tokens[listIdx];
+  if (!list || !list.items) return [{}, ''];
+
   const metadata = {};
-  const listStart = tokens.findIndex(token => token.type === 'list_start');
-  const listEnd = tokens.findIndex(token => token.type === 'list_end');
-  for (let i = listStart; i < listEnd; i++) {
-    if (tokens[i].type === 'text') {
-      let [key, value] = tokens[i].text.split(':').map(t => t.trim());
-      if (value) {
-        metadata[key.toLowerCase()] = value;
-      }
+  for (let item of list.items) {
+    let [key, value] = item.text.split(':').map(t => t.trim());
+    if (value) {
+      metadata[key.toLowerCase()] = value;
     }
   }
-  const markedTokens = tokens.slice(listEnd + 1);
+
+  const markedTokens = tokens.slice(1 + listIdx);
   let content = '';
-  if (markedTokens.length) {
+  if (markedTokens && markedTokens.length > 0) {
     markedTokens.links = links;
     content = marked.parser(markedTokens).trim();
   }
@@ -54,8 +59,8 @@ function mapToMetadataTree(links, sectionNode) {
   let mappedSections;
   if (sections) {
     mappedSections = sections.map(section => mapToMetadataTree(links, section));
-  }
-  return { name, metadata, content, sections: mappedSections };
+    return { name, metadata, content, sections: mappedSections };
+  } else return { name, metadata, content };
 }
 
 module.exports = mapToMetadataTree;
