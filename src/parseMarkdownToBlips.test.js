@@ -81,12 +81,13 @@ La lune la fromage
 
     expect(parseMarkdownToBlips(md)).toEqual([
       {
-        name: "Placeholder",
-        quadrant: "Languages and Frameworks",
-        ring: "Adopt",
+        name: 'Placeholder',
+        quadrant: 'Languages and Frameworks',
+        ring: 'Adopt',
         isNew: true,
-        description: '<p><a href=\"https://github.com/Naereen/StrapDown.js/blob/master/LICENSE\"><img src=\"https://img.shields.io/github/license/Naereen/StrapDown.js.svg\" alt=\"GitHub license\"></a></p>',
+        description:
+          '<p><a href="https://github.com/Naereen/StrapDown.js/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Naereen/StrapDown.js.svg" alt="GitHub license"></a></p>',
       },
     ]);
-  })
+  });
 });

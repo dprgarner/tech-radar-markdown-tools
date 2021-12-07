@@ -59,6 +59,26 @@ describe('mapToMetadataTree', () => {
             },
           ],
         },
+        {
+          name: 'h2 without list',
+          tokens: [
+            {
+              type: 'paragraph',
+              text: 'Yay',
+              tokens: [{ type: 'text', text: 'Yay' }],
+            },
+          ],
+        },
+        {
+          name: 'h2 with empty list',
+          tokens: [
+            {
+              type: 'list',
+              text: '',
+              items: [],
+            },
+          ],
+        },
       ],
     };
     const links = {
@@ -82,6 +102,16 @@ describe('mapToMetadataTree', () => {
           name: 'Another h2',
           metadata: { status: 'Cool', really: 'Yep' },
           content: '<p>Eh</p>',
+        },
+        {
+          name: 'h2 without list',
+          metadata: {},
+          content: '',
+        },
+        {
+          name: 'h2 with empty list',
+          metadata: {},
+          content: '',
         },
       ],
     });
