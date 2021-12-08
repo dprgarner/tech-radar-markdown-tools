@@ -11,10 +11,17 @@ describe('createTokensTree', () => {
 
 Nothing else here.
     `;
-    expect(testMd(md)).toEqual({
-      name: 'H1',
-      tokens: [{ type: 'paragraph', text: 'Nothing else here.' }],
-    });
+    expect(testMd(md)).toEqual(
+      expect.objectContaining({
+        name: 'H1',
+        tokens: [
+          expect.objectContaining({
+            type: 'paragraph',
+            text: 'Nothing else here.',
+          }),
+        ],
+      })
+    );
   });
 
   it('creates a leaf node for a nested header', () => {
@@ -23,10 +30,17 @@ Nothing else here.
 
 Nothing else here.
     `;
-    expect(testMd(md)).toEqual({
-      name: 'H2',
-      tokens: [{ type: 'paragraph', text: 'Nothing else here.' }],
-    });
+    expect(testMd(md)).toEqual(
+      expect.objectContaining({
+        name: 'H2',
+        tokens: [
+          expect.objectContaining({
+            type: 'paragraph',
+            text: 'Nothing else here.',
+          }),
+        ],
+      })
+    );
   });
 
   it('recursively creates a nested tree', () => {
@@ -49,63 +63,71 @@ Stuff with a [link][link]
 
 Eh
     `.trim();
-    expect(testMd(md)).toEqual({
-      name: 'H1',
-      tokens: [],
-      sections: [
-        {
-          name: 'H2',
-          tokens: [
-            { type: 'list_start', ordered: false, start: '', loose: false },
-            {
-              type: 'list_item_start',
-              task: false,
-              checked: undefined,
-              loose: false,
-            },
-            { type: 'text', text: 'Item: One' },
-            { type: 'list_item_end' },
-            {
-              type: 'list_item_start',
-              task: false,
-              checked: undefined,
-              loose: false,
-            },
-            { type: 'text', text: 'Item Two without a colon' },
-            { type: 'space' },
-            { type: 'list_item_end' },
-            { type: 'list_end' },
-            { type: 'paragraph', text: 'Stuff with a [link][link]' },
-            { type: 'space' },
-          ],
-        },
-        {
-          name: 'Another h2',
-          tokens: [
-            { type: 'list_start', ordered: false, start: '', loose: false },
-            {
-              type: 'list_item_start',
-              task: false,
-              checked: undefined,
-              loose: false,
-            },
-            { type: 'text', text: 'Status: Cool' },
-            { type: 'list_item_end' },
-            {
-              type: 'list_item_start',
-              task: false,
-              checked: undefined,
-              loose: false,
-            },
-            { type: 'text', text: 'Really: Yep' },
-            { type: 'space' },
-            { type: 'list_item_end' },
-            { type: 'list_end' },
-            { type: 'paragraph', text: 'Eh' },
-          ],
-        },
-      ],
-    });
+    expect(testMd(md)).toEqual(
+      expect.objectContaining({
+        name: 'H1',
+        sections: [
+          expect.objectContaining({
+            name: 'H2',
+            tokens: [
+              expect.objectContaining({
+                type: 'list',
+                items: [
+                  expect.objectContaining({
+                    type: 'list_item',
+                    text: 'Item: One',
+                  }),
+                  expect.objectContaining({
+                    type: 'list_item',
+                    text: 'Item Two without a colon',
+                  }),
+                ],
+              }),
+              expect.objectContaining({ type: 'space' }),
+              expect.objectContaining({
+                type: 'paragraph',
+                text: 'Stuff with a [link][link]',
+                tokens: [
+                  expect.objectContaining({
+                    type: 'text',
+                    text: 'Stuff with a ',
+                  }),
+                  expect.objectContaining({
+                    type: 'link',
+                    text: 'link',
+                    href: 'http://link',
+                  }),
+                ],
+              }),
+              expect.objectContaining({ type: 'space' }),
+            ],
+          }),
+          expect.objectContaining({
+            name: 'Another h2',
+            tokens: [
+              expect.objectContaining({
+                type: 'list',
+                items: [
+                  expect.objectContaining({
+                    type: 'list_item',
+                    text: 'Status: Cool',
+                  }),
+                  expect.objectContaining({
+                    type: 'list_item',
+                    text: 'Really: Yep',
+                  }),
+                ],
+              }),
+              expect.objectContaining({ type: 'space' }),
+              expect.objectContaining({
+                type: 'paragraph',
+                text: 'Eh',
+              }),
+            ],
+          }),
+        ],
+      })
+    );
   });
 });
 

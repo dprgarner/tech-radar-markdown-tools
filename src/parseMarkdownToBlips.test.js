@@ -65,4 +65,29 @@ La lune la fromage
       },
     ]);
   });
+
+  // see https://naereen.github.io/badges/
+  it('support markdown github macro', () => {
+    const md = `
+# Languages and Frameworks
+
+## Placeholder
+
+- Status: Adopt
+- Modified: August 2018
+
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+    `.trim();
+
+    expect(parseMarkdownToBlips(md)).toEqual([
+      {
+        name: 'Placeholder',
+        quadrant: 'Languages and Frameworks',
+        ring: 'Adopt',
+        isNew: true,
+        description:
+          '<p><a href="https://github.com/Naereen/StrapDown.js/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Naereen/StrapDown.js.svg" alt="GitHub license"></a></p>',
+      },
+    ]);
+  });
 });
