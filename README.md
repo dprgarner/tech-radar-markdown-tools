@@ -1,6 +1,5 @@
 # Tech Radar Markdown Tools
 
-[![Build Status](https://travis-ci.org/dprgarner/tech-radar-markdown-tools.svg?branch=master)](https://travis-ci.org/dprgarner/tech-radar-markdown-tools)
 [![npm](https://img.shields.io/npm/v/tech-radar-markdown-tools)](http://npmjs.com/package/tech-radar-markdown-tools)
 
 Tools for creating a Tech Radar in Markdown and converting it to JSON.
@@ -48,6 +47,7 @@ Example usage of this function:
 
 ```js
 const path = require('path');
+const { createRadarJson } = require('tech-radar-markdown-tools');
 
 createRadarJson({
   title: 'My radar',
@@ -102,7 +102,7 @@ const md = `
 - Status: Bon
 - Modified: août 2018
 
-La lune la fromage
+La lune est un fromage
 `.trim();
 
 // Returns an array with one "blip" object
@@ -121,7 +121,9 @@ To run the linter:
 
 ## Releasing
 
-Releases to NPM are performed via Travis when tagged commits are pushed to the repo. Create a new tagged commit and bump the version in package.json with the npm version script:
+Publishing is performed manually.
+
+In your PR, create a new tagged commit and bump the version in package.json with the npm version script:
 
 ```bash
 npm version patch
